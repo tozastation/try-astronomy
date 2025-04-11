@@ -4,4 +4,9 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.10"
-dependencies = []
+dependencies = [
+    "astropy>=6.1.7",
+    "h5py>=3.13.0",
+    "numpy>=2.2.4",
+    "pandas>=2.2.3",
+]
