@@ -1,78 +1,77 @@
-import h5py
-import torch
-import numpy as np
-from torch.utils.data import Dataset
-from sklearn.preprocessing import LabelEncoder
-import pandas as pd
+import h5py  # HDF5ファイルの読み書きを行うためのライブラリ
+import torch  # PyTorchのテンソル操作などを行うためのライブラリ
+import numpy as np  # 数値計算を行うためのライブラリ
+from torch.utils.data import Dataset  # PyTorchのデータセットの抽象クラス
+from sklearn.preprocessing import LabelEncoder  # カテゴリカルなラベルを数値に変換するためのライブラリ
+
 
 class HDF5Dataset(Dataset):
-    def __init__(self, file_path, feature_keys, target_key, transform=None):
-        self.file_path = file_path
-        self.feature_keys = feature_keys
-        self.target_key = target_key
-        self.transform = transform
-        self.band_le = LabelEncoder()
-        with h5py.File(self.file_path, 'r') as f:
-            data_dict = {}
-            self.dataset_len = len(f[self.feature_keys[0]])
-            for key in self.feature_keys:
-                data = f[key][()]
-                if data.dtype.byteorder == '>':
-                    data = data.byteswap().view(data.dtype.newbyteorder('<'))
-                data_dict[key] = data
-            target_data = f[self.target_key][()]
-            if target_data.dtype.byteorder == '>':
-                target_data = target_data.byteswap().view(target_data.dtype.newbyteorder('<'))
-            data_dict[self.target_key] = target_data
-            self.df = pd.DataFrame(data_dict)
+    def __init__(self, file_path, keys, transform=None):
+        """
+        HDF5ファイルからデータを読み込むカスタムデータセットクラス。
 
-            all_bands = []
-            for i in range(self.dataset_len):
-                for band in f['image_band'][i]:
-                    all_bands.append(band.decode('utf-8'))
-            self.band_le.fit(all_bands)
+        Args:
+            file_path (str): HDF5ファイルのパス。
+            keys (list): HDF5ファイルから読み込むキーのリスト。各キーはデータセット内の要素に対応する。
+            transform (callable, optional): データに適用する変換関数。デフォルトはNone。
+        """
+        self.file_path = file_path  # HDF5ファイルのパスを保存
+        self.keys = keys  # 読み込むキーのリストを保存
+        self.transform = transform  # 適用する変換関数を保存
+        self.band_le = LabelEncoder()  # 'image_band'の値を数値に変換するためのLabelEncoderを初期化
+        self.h5_file = h5py.File(self.file_path, 'r')  # HDF5ファイルを読み取りモードで開く
+        self.dataset_len = len(self.h5_file[self.keys[0]])  # データセットの長さを最初のキーのデータの長さから取得
+
+        # 全てのキーの長さが同じであることを確認
+        for key in keys:
+            assert len(self.h5_file[key]) == self.dataset_len, "All keys must have the same length."
+
+        all_bands = []
+        # 全てのサンプルに含まれるバンド名（文字列）を収集
+        for i in range(self.dataset_len):
+            for band in self.h5_file['image_band'][i]:
+                all_bands.append(band.decode('utf-8'))  # バイト文字列をUTF-8でデコードしてリストに追加
+        self.band_le.fit(all_bands)  # 収集した全てのバンド名に基づいてLabelEncoderを学習
 
     def __len__(self):
+        """
+        データセットの長さを返す。
+
+        Returns:
+            int: データセットの長さ。
+        """
         return self.dataset_len
 
-    def _get_tensor_from_value(self, value):
-        if isinstance(value, np.ndarray):
-            if value.dtype.byteorder == '>':
-                value = value.byteswap().view(value.dtype.newbyteorder('<'))
-            return torch.from_numpy(value).float().unsqueeze(0) # 明示的に unsqueeze(0)
-        elif isinstance(value, (np.float16, np.float32, np.float64)):
-            if np.array(value).dtype.byteorder == '>':
-                value = np.array(value).byteswap().view(np.array(value).dtype.newbyteorder('<')).item()
-            return torch.tensor(value).float().unsqueeze(0) # 明示的に unsqueeze(0)
-        elif isinstance(value, list):
-            np_array_value = np.array(value)
-            if np_array_value.dtype.byteorder == '>':
-                np_array_value = np_array_value.byteswap().view(np_array_value.dtype.newbyteorder('<'))
-            return torch.from_numpy(np_array_value).float().unsqueeze(0) # 明示的に unsqueeze(0)
-        elif isinstance(value, (str, bytes)):
-            raise TypeError(f"Unsupported type: {type(value)}")
-        else:
-            return torch.tensor(value).float().unsqueeze(0) # 明示的に unsqueeze(0)
-
     def __getitem__(self, index):
-        data = {}
-        features = []
-        with h5py.File(self.file_path, 'r') as f: # __getitem__ 内でファイルを開く
-            for key in self.feature_keys:
-                value = f[key][index][()]
-                if key == "image_band":
-                    if value.dtype.byteorder == '>':
-                        value = value.byteswap().view(value.dtype.newbyteorder('<'))
-                    feature_tensor = torch.from_numpy(self.band_le.transform(value)).long().unsqueeze(0)
-                    features.append(feature_tensor)
-                    print(f"Feature '{key}' shape: {feature_tensor.shape}")
-                else:
-                    feature_tensor = self._get_tensor_from_value(value)
-                    features.append(feature_tensor)
-                    print(f"Feature '{key}' shape: {feature_tensor.shape}")
+        """
+        指定されたインデックスのデータを取得する。
 
-            target_value = f[self.target_key][index][()]
-            data['target'] = self._get_tensor_from_value(target_value).unsqueeze(0)
+        Args:
+            index (int): 取得するデータのインデックス。
 
-        data['features'] = torch.cat(features, dim=1)
-        return data
+        Returns:
+            dict: データの辞書。キーは初期化時に指定されたキーに対応し、値は対応するデータ。
+        """
+        data = {}  # データを格納する空の辞書を初期化
+        for key in self.keys:
+            value = self.h5_file[key][index][()]  # HDF5ファイルから指定されたキーとインデックスのデータを読み込む
+            if key == "image_band":
+                data[key] = torch.from_numpy(self.band_le.transform(value)).long()  # 'image_band'の場合、LabelEncoderで数値に変換し、PyTorchのLongTensorに変換
+            elif isinstance(value, np.ndarray):
+                data[key] = torch.from_numpy(value).float()  # NumPy配列の場合、PyTorchのFloatTensorに変換
+            elif isinstance(value, (np.float16, np.float32, np.float64)):
+                data[key] = torch.tensor(value).float()  # NumPyのfloat型の場合、PyTorchのFloatTensorに変換
+            elif isinstance(value, list):
+                data[key] = torch.from_numpy(np.array(value)).float()  # Pythonのリストの場合、NumPy配列に変換後、PyTorchのFloatTensorに変換
+            elif isinstance(value, (str, bytes)):
+                raise TypeError(f"Unsupported type for key {key}: {type(value)}")  # 文字列またはバイト列の場合、TypeErrorを発生させる（現状サポートしていない型）
+            else:
+                data[key] = torch.tensor(value)  # その他の型の場合、PyTorchのテンソルに変換
+        return data  # 読み込んだデータを格納した辞書を返す
+
+    def __del__(self):
+        """
+        オブジェクトが削除される際にHDF5ファイルを閉じる。
+        """
+        if hasattr(self, 'h5_file') and self.h5_file:
+            self.h5_file.close()
