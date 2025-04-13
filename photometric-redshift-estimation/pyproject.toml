@@ -15,6 +15,7 @@ dependencies = [
     "ray[tune]>=2.44.1",
     "scikit-learn>=1.6.1",
     "tables>=3.10.1",
+    "tensorboardx>=2.6.2.2",
     "torch>=2.6.0",
     "torchaudio>=2.6.0",
     "torchvision>=0.21.0",
