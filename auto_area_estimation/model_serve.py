@@ -12,11 +12,16 @@ print(f"Using device: {device}")
 
 # 特徴量として使用する列名 (学習時と同じである必要があります)
 features = [
-    'mag_auto',
-    'mag_iso',
+    'x2_image',
+    'y2_image',
+    'cxx_image',
+    'cyy_image',
+    'fluxerr_auto',
+    'flux_radius',
     'area_iso',
-    'kron_radius',
+    'xy_image',
     'npix',
+    'flux_aper_1',
 ]
 
 
