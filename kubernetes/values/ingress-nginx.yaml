@@ -1,0 +1,7 @@
+controller:
+  nodeSelector:
+    workload: system
+admissionWebhooks:
+  patch:
+    nodeSelector:
+      workload: system

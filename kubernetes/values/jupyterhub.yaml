@@ -1,0 +1,25 @@
+hub:
+  nodeSelector:
+    workload: system
+  config:
+    Authenticator:
+      admin:
+        users:
+          - tozastation
+      # auto_login: true
+      # enable_auth_state: true
+    DummyAuthenticator:
+      password: password
+    JupyterHub:
+      authenticator_class: dummy
+proxy:
+  service:
+    type: ClusterIP
+singleuser:
+  nodeSelector:
+    workload: notebook
+ingress:
+  enabled: true
+  ingressClassName: nginx
+  hosts:
+    - jupyterhub.try-astronomy.local
