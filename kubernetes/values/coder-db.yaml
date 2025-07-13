@@ -1,0 +1,10 @@
+auth:
+  username: coder
+  password: coder
+  database: coder
+primary:
+  persistence:
+    enabled: true
+    size: 10Gi
+  nodeSelector:
+    workload: system

@@ -1,0 +1,7 @@
+coder:
+  nodeSelector:
+    workload: system
+  ingress:
+    enable: true
+    className: nginx
+    host: coder.try-astronomy.local
