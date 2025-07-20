@@ -1,0 +1,13 @@
+# PDF to PNG Converter Requirements
+# PDFをPNG変換するための必要なPythonライブラリ
+
+# 必須ライブラリ（利用可能なバージョンに調整）
+pdf2image>=1.16.0,<2.0.0    # PDFを画像に変換
+Pillow>=8.0.0               # 画像処理・保存
+
+# オプション（進捗表示等）
+tqdm>=4.0.0                 # 進捗バー表示
+
+# システム要件:
+# - poppler-utils (Linux/WSL: sudo apt-get install poppler-utils)
+# - poppler (macOS: brew install poppler)
