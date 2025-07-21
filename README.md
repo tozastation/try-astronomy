@@ -151,3 +151,10 @@ try-astronomy/
 ### 🏗️ **Infrastructure as Code**
 - **Terraform**: インフラ管理
 - **Kind**: ローカルKubernetes環境
+
+## 📚 引用・参考文献
+
+### extreme_unraveling-the-universe 教育教材
+- **『極・宇宙を解く 詳解』** (恒星社厚生閣)
+- 編者：福江 純、沢 武文、高橋 真聡
+- URL: https://www.kouseisha.com/news/n32789.html
