@@ -155,6 +155,14 @@ try-astronomy/
 ## 📚 引用・参考文献
 
 ### extreme_unraveling-the-universe 教育教材
+
+**主要参考書**
+- **『極・宇宙を解く』** (恒星社厚生閣, 2020年)
+- 編者：福江 純、沢 武文、高橋 真聡
+- ISBN: 9784769916437
+- URL: https://www.kouseisha.com/book/b492698.html
+
+**詳解版**
 - **『極・宇宙を解く 詳解』** (恒星社厚生閣)
 - 編者：福江 純、沢 武文、高橋 真聡
 - URL: https://www.kouseisha.com/news/n32789.html
