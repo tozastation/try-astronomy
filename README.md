@@ -82,11 +82,20 @@ cd kubernetes
 helmfile sync
 ```
 
-#### 可視化プレイグラウンド
+#### 🎮 可視化プレイグラウンド
 
 ```bash
-# ブラウザで以下を開く
-open playground/diurnal_motion.html
+# ブラウザでインタラクティブな可視化を開く
+open playground/diurnal_motion.html              # 日周運動
+open playground/satellite_orbit_insertion.html   # 衛星軌道投入
+open playground/satellite_orbit_gto.html         # 静止トランスファ軌道
+open playground/satellite_orbit_sso.html         # 太陽同期軌道
+
+# Pythonスクリプトの実行例
+cd playground
+python3 hubble_expansion_spectral_shift_demo.py  # ハッブル膨張とスペクトルシフト
+python3 keplers_third_law_binary.py              # ケプラーの第3法則（連星系）
+python3 schwarzschild_radius_example.py          # シュワルツシルト半径計算
 ```
 
 ## 📁 プロジェクト構造
@@ -115,7 +124,19 @@ try-astronomy/
 │       ├── 💻 coder.yaml           # Coder設定
 │       └── 🌐 ingress-nginx.yaml   # Ingress設定
 ├── 🎮 playground/                   # 可視化プレイグラウンド
-│   └── 🌅 diurnal_motion.html      # 日周運動可視化
+│   ├── 🌅 diurnal_motion.html      # 日周運動可視化
+│   ├── 🛰️ satellite_orbit_*.html   # 衛星軌道シミュレーション
+│   ├── 🌌 hubble_expansion_spectral_shift_demo.py  # ハッブル膨張デモ
+│   ├── ⭐ keplers_third_law_binary.py              # ケプラーの第3法則
+│   ├── 🌟 mass_luminosity_relation.py              # 質量光度関係
+│   ├── ⚫ schwarzschild_radius_example.py         # シュワルツシルト半径
+│   ├── 🔭 magnitude_*.py           # 等級・光度計算
+│   ├── 🚀 specific_impulse_to_velocity.py         # 比推力と速度変換
+│   └── 📊 output/                   # 出力画像ディレクトリ
+├── 🌌 vpython/                      # VPython可視化プロジェクト
+│   └── cosmic_expansion/            # 宇宙膨張シミュレーション
+│       ├── cosmic_expansion_redshift.ipynb         # 赤方偏移デモ
+│       └── cosmic_expansion_redshift_fixed.ipynb   # 修正版
 ├── 🛠️ scripts/                     # ユーティリティスクリプト
 │   ├── 📄 pdf_converter/           # PDF変換ツール
 │   │   ├── 🔧 pdf_converter.py     # 統合変換スクリプト
@@ -137,10 +158,12 @@ try-astronomy/
 - **Matplotlib/Seaborn**: データ可視化
 - **Astropy**: 天文データ処理
 
-### 📊 **データサイエンス**
+### 📊 **データサイエンス & 可視化**
 - **Jupyter Notebook**: インタラクティブ開発
 - **Ray Tune**: ハイパーパラメータ最適化
 - **TensorBoard**: 実験記録・可視化
+- **VPython**: 3D物理シミュレーション
+- **Plotly**: インタラクティブグラフ
 
 ### ☸️ **インフラストラクチャ**
 - **Kubernetes**: コンテナオーケストレーション
@@ -151,6 +174,32 @@ try-astronomy/
 ### 🏗️ **Infrastructure as Code**
 - **Terraform**: インフラ管理
 - **Kind**: ローカルKubernetes環境
+
+### 🎯 **主要機能**
+
+#### 🔬 機械学習・データ解析
+- 測光赤方偏移推定モデル
+- 天体領域の自動推定
+- CEERS（Cosmic Evolution Early Release Science）データセット対応
+
+#### 📐 天文計算
+- ケプラーの法則計算
+- 質量光度関係
+- シュワルツシルト半径計算
+- 等級と光度の変換
+- ハッブルの法則とスペクトルシフト
+
+#### 🛰️ 軌道力学シミュレーション
+- 衛星軌道投入（LEO → GTO → GEO）
+- 静止トランスファ軌道（GTO）
+- 太陽同期軌道（SSO）
+- 比推力と速度変換
+
+#### 🌌 可視化
+- インタラクティブHTML/JavaScript可視化
+- VPythonによる3D宇宙膨張シミュレーション
+- 赤方偏移の視覚的デモンストレーション
+- 日周運動の可視化
 
 ## 📚 引用・参考文献
 
@@ -166,3 +215,41 @@ try-astronomy/
 - **『極・宇宙を解く 詳解』** (恒星社厚生閣)
 - 編者：福江 純、沢 武文、高橋 真聡
 - URL: https://www.kouseisha.com/news/n32789.html
+
+## 🎓 学習リソース
+
+### 📚 教育教材
+- **Chapter 1**: 宇宙のスケールと基本概念
+  - フラーレン構造の理解
+  - 原子構造と星間物質
+  - 時間・距離スケールの把握
+  - プランク角単位系
+
+### 🧪 実践プロジェクト
+- **Playground**: 20以上の天文計算・シミュレーションスクリプト
+- **VPython**: 宇宙膨張の3D可視化
+- **機械学習**: 実際の天文データを用いたモデル訓練
+
+## 🤝 コントリビューション
+
+プロジェクトへの貢献を歓迎します！
+
+1. このリポジトリをフォーク
+2. 機能ブランチを作成 (`git checkout -b feature/amazing-feature`)
+3. 変更をコミット (`git commit -m 'Add some amazing feature'`)
+4. ブランチにプッシュ (`git push origin feature/amazing-feature`)
+5. プルリクエストを作成
+
+## 📝 ライセンス
+
+このプロジェクトはMITライセンスの下で公開されています。
+
+## 📧 コンタクト
+
+- **Author**: tozastation
+- **Email**: tozastation@gmail.com
+- **GitHub**: [@tozastation](https://github.com/tozastation)
+
+---
+
+⭐ このプロジェクトが役立つと思われた方は、スターをつけていただけると幸いです！
