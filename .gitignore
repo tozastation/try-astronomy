@@ -178,3 +178,12 @@ cython_debug/
 .terraform
 .coder
 .html
+
+# Docker
+docker-compose.override.yml
+.dockerignore
+
+# Jupyter Lab runtime
+.jupyter/
+jupyter_notebook_config.py
+MultimodalUniverse/gaia/dataset/train-00000-of-00001.parquet
