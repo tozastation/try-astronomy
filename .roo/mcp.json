@@ -1,0 +1,24 @@
+{
+  "mcpServers": {
+    "serena": {
+      "command": "${env:HOME}/.local/share/mise/installs/uv/0.9.11/uv-x86_64-unknown-linux-musl/uv",
+      "args": [
+        "run",
+        "--directory",
+        "${env:HOME}/ghq/github.com/oraios/serena",
+        "serena-mcp-server",
+        "--transport",
+        "stdio",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "9121",
+        "--context",
+        "ide-assistant",
+        "--project",
+        "${env:HOME}/ghq/github.com/tozastation/try-astronomy"
+      ],
+      "disabled": false
+    }
+  }
+}
