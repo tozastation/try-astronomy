@@ -1,0 +1,48 @@
+services:
+  jupyter:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: astronomy-jupyter:latest
+    container_name: astronomy-jupyter
+    
+    # GPU設定
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    
+    # ポート設定
+    ports:
+      - "8888:8888"
+    
+    # ボリュームマウント
+    volumes:
+      - .:/workspace
+      - jupyter-data:/root/.jupyter
+    
+    # 作業ディレクトリ
+    working_dir: /workspace
+    
+    # 環境変数
+    environment:
+      - JUPYTER_ENABLE_LAB=yes
+      - PYTORCH_CUDA_ALLOC_CONF=max_split_size_mb:512
+    
+    # 再起動ポリシー
+    restart: unless-stopped
+    
+    # ネットワーク
+    networks:
+      - astronomy-net
+
+volumes:
+  jupyter-data:
+    driver: local
+
+networks:
+  astronomy-net:
+    driver: bridge
