@@ -40,6 +40,24 @@
 -   **ローカルKubernetes**: Kindで手軽にローカル環境を構築。
 -   **リモート開発環境**: CoderとJupyterHubによる開発環境の構築と活用。
 
+## 📊 使用データセット
+
+機械学習プロジェクトでは、以下の天文データセットを使用しています。
+
+### CEERS (Cosmic Evolution Early Release Science)
+-   **用途**: 測光赤方偏移推定モデルの学習
+-   **特徴**: JWST（ジェームズ・ウェッブ宇宙望遠鏡）による多波長観測データ
+-   **内容**: 複数のフィルター（F070W, F090W, F115W, F150W, F200W, F277W, F356W, F444Wなど）の測光データ
+
+### Multimodal Universe
+HuggingFace上で公開されている天文データセットコレクション：
+
+-   **Legacy Survey**: 銀河の多波長画像データ
+-   **SDSS (Sloan Digital Sky Survey)**: スペクトルデータ
+-   **PLAsTiCC (Photometric LSST Astronomical Time-Series Classification Challenge)**: 時系列光度曲線データ
+
+詳細は[Multimodal Universe](https://huggingface.co/MultimodalUniverse)を参照。
+
 ## 📁 プロジェクト構造
 
 ```
