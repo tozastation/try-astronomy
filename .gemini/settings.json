@@ -1,0 +1,24 @@
+{
+  "mcpServers": {
+    "serena": {
+      "displayName": "Serena Coding Agent",
+      "command": "$HOME/.local/share/mise/installs/uv/0.9.11/uv-x86_64-unknown-linux-musl/uv",
+      "args": [
+        "run",
+        "--directory",
+        "$HOME/ghq/github.com/oraios/serena", // 環境変数から読み込み
+        "serena-mcp-server",
+        "--transport",
+        "stdio",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "9121",
+        "--context",
+        "ide-assistant",
+        "--project",
+        "$HOME/ghq/github.com/tozastation/try-astronomy" // 環境変数から読み込み
+      ]
+    }
+  }
+}
