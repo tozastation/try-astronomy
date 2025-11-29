@@ -187,3 +187,7 @@ docker-compose.override.yml
 .jupyter/
 jupyter_notebook_config.py
 MultimodalUniverse/gaia/dataset/train-00000-of-00001.parquet
+MultimodalUniverse/galaxy10_decals/dataset/train-00000-of-00002.parquet
+MultimodalUniverse/galaxy10_decals/dataset/train-00001-of-00002.parquet
+MultimodalUniverse/galaxy10_decals/dataset/data_info.pkl
+MultimodalUniverse/galaxy10_decals/dataset/best_model.pth
