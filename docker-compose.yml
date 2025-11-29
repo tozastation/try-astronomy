@@ -5,6 +5,7 @@ services:
       dockerfile: Dockerfile
     image: astronomy-jupyter:latest
     container_name: astronomy-jupyter
+    ipc: host
     
     # GPU設定
     deploy:
