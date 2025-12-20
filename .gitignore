@@ -191,3 +191,6 @@ MultimodalUniverse/galaxy10_decals/dataset/train-00000-of-00002.parquet
 MultimodalUniverse/galaxy10_decals/dataset/train-00001-of-00002.parquet
 MultimodalUniverse/galaxy10_decals/dataset/data_info.pkl
 MultimodalUniverse/galaxy10_decals/dataset/best_model.pth
+
+*Zone.Identifier
+robots.txt
